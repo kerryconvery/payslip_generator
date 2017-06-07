@@ -1,0 +1,25 @@
+{
+  "name": "payslip_calculator",
+  "version": "1.0.0",
+  "description": "Payslip Calculator",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "chai": "^3.5.0",
+    "check-types": "^7.1.5",
+    "csvtojson": "^1.1.6",
+    "express": "^4.15.3",
+    "mathjs": "^3.13.1",
+    "mocha": "^3.4.1",
+    "sinon": "^2.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha --reporter spec tests/*.js"
+  },
+  "author": "Kerry Convery",
+  "license": "ISC"
+}
