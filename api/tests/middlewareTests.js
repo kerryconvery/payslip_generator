@@ -124,3 +124,25 @@ describe('Test csv middleware', () => {
 		});	
 	});
 });
+
+describe("Test json to employee model middleware -", () =>
+{
+	it("valid schema validation", (done) =>
+	{
+		
+	});
+	
+	it("invalid schema validation", (done) =>
+	{
+		
+	});
+	
+	it("valid json parsed to employee model list", (done) =>
+	{
+		
+	});
+	
+	it("next is not called when schema validation fails", () => {
+		
+	});
+})
