@@ -9,6 +9,8 @@ module.exports = {
 		var csvErrors = null;
 		var rowCount = 0;
 		
+		try
+		{
 		csv({noheader:true})
 			.fromString(csvString)
 			.on('csv', (row) => {
@@ -34,6 +36,11 @@ module.exports = {
 					done(null, items)
 				
 			})
+		}
+		catch(e)
+		{
+			done([e], null);
+		}
 	},
 
 	mapToEmployee: function(row)
