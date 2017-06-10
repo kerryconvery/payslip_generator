@@ -1,54 +1,20 @@
 var chai = require('chai');
 var middleware = require('../middleware');
-
+var check = require("check-types");
+var models = require("../models");
+var mocks = require("./mocks");
+var sinon = require("sinon");
+	
 describe('Test csv middleware', () => {
 
-	var Request = function()
-	{
-		return {
-				contentType: '',
-				get: function(key) {
-						if(key == 'Content-Type') 
-							return this.contentType;
-						else
-							return '';
-					 },
-				set: function(key, value) {
-					  
-						if (key == 'Content-Type')
-							this.contentType = value;
-						
-					 },
-				body: null
-			}
-	}
-		
-	var Connection = function()
-	{
-		return {
-			message: '',
-			send: function(value) {this.message = value}
-		}
-	};
-	
-	var Response = function()
-	{
-		return {
-			responseStatus: 0,
-			connection: new Connection(),
-			status: function(value){this.responseStatus = value; return this.connection}
-			
-		};
-	}
-	
 	it('When the request content type is application/csv', (done) => {
 		
-		var req = new Request();
+		var req = new mocks.Request();
 		
 		req.contentType = 'application/csv';
 		req.body = '"David","Rudd",60050,9%,"01 March - 31 March"';
 		
-		middleware.parseCsvContent(req, new Response(), () => {
+		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
 			
 			chai.expect(req.contentType).equals('application/json');
 		
@@ -58,12 +24,12 @@ describe('Test csv middleware', () => {
 	
 	it('When the request content type is application/csv check body is object', (done) => {
 		
-		var req = new Request();
+		var req = new mocks.Request();
 		
 		req.contentType = 'application/csv';
 		req.body = '"David","Rudd",60050,9%,"01 March - 31 March"';
 		
-		middleware.parseCsvContent(req, new Response(), () => {
+		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
 			
 			chai.expect(Array.isArray(req.body)).equals(true);
 			
@@ -74,12 +40,14 @@ describe('Test csv middleware', () => {
 	
 	it('When the request content type is application/csv and body contains errors', (done) => {
 		
-		var req = new Request();
+		var req = new mocks.Request();
 		
 		req.contentType = 'application/csv';
 		req.body = '"David","Rudd",60050,%9,"01 March - 31 March"';
 		
-		var res = new Response();
+		var res = new mocks.Response();
+		
+		var next = sinon.spy();
 		
 		res.connection.send = function(value) 
 		{
@@ -88,35 +56,38 @@ describe('Test csv middleware', () => {
 			done();
 		};
 		
-		middleware.parseCsvContent(req, res, () => {});
+		middleware.parseEmployeeCsvContent(req, res, next);
 	});
 	
 	it('When the request content type is application/csv and body is blank', () => {
 		
-		var req = new Request();
+		var req = new mocks.Request();
 		
 		req.contentType = 'application/csv';
 		req.body = '';
 		
-		var res = new Response();
+		var res = new mocks.Response();
+		
+		var next = sinon.spy();
 		
 		res.connection.send = function(value) 
 		{
 			chai.expect(res.responseStatus).equals(400);
 		};
 		
+		middleware.parseEmployeeCsvContent(req, res, next);
 		
-		middleware.parseCsvContent(req, res, () => {});				
+		chai.expect(next.notCalled).equals(true);
 	});
 	
 	it('When the request content type is not application/csv', (done) => {
 		
-		var req = new Request();
+		var req = new mocks.Request();
 		
 		req.contentType = 'application/json';
 		req.body = '{}';
 		
-		middleware.parseCsvContent(req, new Response(), () => {
+		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
 			
 			chai.expect(req.contentType).equals('application/json');
 			
@@ -129,20 +100,49 @@ describe("Test json to employee model middleware -", () =>
 {
 	it("valid schema validation", (done) =>
 	{
+		var req = new mocks.Request();
 		
+		req.contentType = 'application/json';
+		req.body = '{"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}]}';
+	
+		var res = new mocks.Response(); 
+		
+		middleware.parseEmployeeListJsonContent(req, res, () => {
+						
+			chai.expect(Array.isArray(req.body)).equals(true);
+			chai.expect(req.body.length).equals(1);
+			chai.expect(check.instanceStrict(req.body[0], models.EmployeeModel)).equals(true);	
+
+			done();
+		});			
 	});
 	
-	it("invalid schema validation", (done) =>
+	it("invalid schema validation", () =>
 	{
+		var req = new mocks.Request();
 		
-	});
-	
-	it("valid json parsed to employee model list", (done) =>
-	{
+		req.contentType = 'application/json';
+		req.body = '{"employees" : [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}]}';
 		
+		var res = new mocks.Response(); 
+		
+		middleware.parseEmployeeListJsonContent(req, res, () => {
+		
+			chai.expect(res.responseStatus).equals(400);
+		});	
 	});
 	
 	it("next is not called when schema validation fails", () => {
 		
+		var req = new mocks.Request();
+		
+		req.contentType = 'application/json';
+		req.body = '{}';
+		
+		var next = sinon.spy();
+		
+		middleware.parseEmployeeListJsonContent(req, new mocks.Response(), next);
+		
+		chai.expect(next.notCalled).equals(true);
 	});
 })

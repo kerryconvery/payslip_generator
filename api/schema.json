@@ -1,0 +1,16 @@
+module.exports = {
+	employeeSchema :
+	'{' + 
+		'[' +
+			'"type" : "object",' +
+			'"properties" : {' + 
+				'"firstName" : {"type" : "string"},' +
+				'"lastName" : {"type" : "string"},' +
+				'"annualSalary" : {"type" : "integer", "minimum" : 0},' +
+				'"superRate" : {"type" : "number", "minimum" : 0, "maximum" : 1},' +
+				'"paymentStartDate" : {"type" : "string"},' +
+			'},' +
+			'"requires" : ["firstName", "lastName", "annualSalary", "superRate", "paymentStartDate"]' +
+		']' +
+	'}' +
+}

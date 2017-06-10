@@ -1,8 +1,10 @@
 var csvParser = require('./csvParser');
+var jsonParser = require('./jsonParser');
+var schema = require('./schema');
 
 module.exports = {
 	
-	parseCsvContent: function(req, res, next)
+	parseEmployeeCsvContent: function(req, res, next)
 	{
 		if (req.get('Content-Type') == 'application/csv')
 		{
@@ -24,6 +26,31 @@ module.exports = {
 				req.body = employees;
 				
 				next();
+			});
+		}
+		else
+			next();
+	},
+	
+	parseEmployeeListJsonContent: function(req, res, next)
+	{
+		if (req.get('Content-Type') == 'application/json')
+		{
+			jsonParser.parse(req.body, jsonParser.validateEmployeeList, jsonParser.mapToEmployeeList, (errors, employeeList) => {
+				
+				if (errors)
+				{
+					console.log(req.body);
+					console.log("errors");
+					res.status(400).send(errors);
+				}
+				else
+				{
+					console.log("not errors");
+					req.body = employeeList;
+					
+					next();
+				}
 			});
 		}
 		else

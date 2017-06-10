@@ -27,7 +27,11 @@ module.exports = {
 				rowCount++;
 			})
 			.on('done', () => {
-				done(csvErrors, items);
+				
+				if (csvErrors)
+					done(csvErrors, null);
+				else
+					done(null, items)
 				
 			})
 	},
@@ -54,12 +58,22 @@ module.exports = {
 			return errors;
 		}
 		
-		if (isNaN(parseInt(row[2]))) //Check annual salary is a valid number
-			errors.push("Columns 2 is not a number");
-			
-		if (isNaN(parseInt(row[3]))) //Check super rate is a valid number
-			errors.push("Columns 3 is not a number");
-			
+		//Check annual salary
+		if (isNaN(parseFloat(row[2])))
+			errors.push("Column 2 is not a number");
+		else if (parseFloat(row[2]) < 0)
+			errors.push("Column 2 is less than zero");
+		else if (parseFloat(row[2]) % 1 != 0)
+			errors.push("Column 2 is not a whole number");
+		
+		//Check super rate
+		if (isNaN(parseFloat(row[3])))
+			errors.push("Column 3 is not a number");
+		else if (parseFloat(row[3]) < 0)
+			errors.push("Column 3 is less than zero");
+		else if (parseFloat(row[3]) % 1 != 0)
+			errors.push("Column 3 is not a whole number");	
+
 		return errors;
 	}
 }
