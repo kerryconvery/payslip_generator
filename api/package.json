@@ -7,7 +7,6 @@
     "test": "tests"
   },
   "dependencies": {
-    "ajv": "^5.1.5",
     "body-parser": "^1.17.2",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
@@ -15,7 +14,6 @@
     "csvtojson": "^1.1.6",
     "express": "^4.15.3",
     "jayschema": "^0.3.1",
-    "json-parser": "^1.1.5",
     "jsonschema": "^1.1.1",
     "mathjs": "^3.13.1",
     "mocha": "^3.4.1",
@@ -24,7 +22,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "mocha --reporter spec tests/*.js",
-	"start": "node server.js"
+    "start": "node server.js"
   },
   "author": "Kerry Convery",
   "license": "ISC"

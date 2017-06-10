@@ -1,5 +1,4 @@
 var Validator = require('jsonschema').Validator;
-var parser = require('json-parser');
 var schema = require('./schema');
 var models = require('./models');
 
