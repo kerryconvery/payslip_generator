@@ -6,27 +6,29 @@ module.exports = {
 	
 	parseEmployeeCsvContent: function(req, res, next)
 	{
-		if (req.get('Content-Type') == 'application/csv')
+		if (req.headers['content-type'] == 'application/csv')
 		{
-			if (req.body == '')
-			{
-				res.status(400).send("The request body if blank");
-				return;				
+			if (req.body == '') {
+				res.setHeader('Content-Type', 'text/plain');
+				res.status(400).send("The request body is blank");			
 			}
-	
-			csvParser.parse(req.body, csvParser.validateEmployee, csvParser.mapToEmployee, (errors, employees) =>
+			else
 			{
-				if (errors)
+				csvParser.parse(req.body, csvParser.validateEmployee, csvParser.mapToEmployee, (errors, employees) =>
 				{
-					res.status(400).send("csv contains errors");
-					return;
-				}
-				
-				req.set('Content-Type', 'application/json');
-				req.body = employees;
-				
-				next();
-			});
+					if (errors) {
+						res.setHeader('Content-Type', 'application/json');
+						res.status(400).send(JSON.stringify(errors));
+					}
+					else {
+						req.headers['content-type'] = 'application/json';
+						
+						req.body = employees;
+					
+						next();
+					}
+				});
+			}
 		}
 		else
 			next();
@@ -34,19 +36,19 @@ module.exports = {
 	
 	parseEmployeeListJsonContent: function(req, res, next)
 	{
-		if (req.get('Content-Type') == 'application/json')
+		if (req.headers['content-type'] == 'application/json')
 		{
-			jsonParser.parse(req.body, jsonParser.validateEmployeeList, jsonParser.mapToEmployeeList, (errors, employeeList) => {
+			var errors = jsonParser.validateEmployeeList(req.body);
 				
-				if (errors)
-					res.status(400).send(errors);
-				else
-				{
-					req.body = employeeList;
-					
-					next();
-				}
-			});
+			if (errors.length > 0) {
+				res.setHeader('Content-Type', 'application/json');
+				res.status(400).send(JSON.stringify(errors));
+			}
+			else {
+				req.body = jsonParser.mapToEmployeeList(req.body);
+				
+				next();
+			}
 		}
 		else
 			next();

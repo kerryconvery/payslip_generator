@@ -3,19 +3,7 @@ module.exports = {
 	Request: function()
 	{
 		return {
-				contentType: '',
-				get: function(key) {
-						if(key == 'Content-Type') 
-							return this.contentType;
-						else
-							return '';
-					 },
-				set: function(key, value) {
-					  
-						if (key == 'Content-Type')
-							this.contentType = value;
-						
-					 },
+				headers: [],
 				body: null
 			}
 	},
@@ -23,13 +11,17 @@ module.exports = {
 	Response: function()
 	{
 		return {
+			header: '',
 			responseStatus: 0,
 			connection: {
 							message: '',
 							send: function(value) {this.message = value}
 						},
-			status: function(value){this.responseStatus = value; return this.connection}
-			
+			status: function(value){this.responseStatus = value; return this.connection},
+			setHeader: function(key, value) {
+				if (key == 'Content-Type')
+					this.header = value;
+			}
 		};
 	}
 }

@@ -138,9 +138,8 @@ describe("Check employee json parser", () => {
 	
 	it("validate valid json", () => {
 		
-		var validJson = {
-			"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"},  
-			 {"firstName" : "Ryan", "lastName" : "Chen", "annualSalary" : 120000, "superRate" : 0.1, "paymentStartDate" : "01 March - 31 March"}]};
+		var validJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"},  
+			 {"firstName" : "Ryan", "lastName" : "Chen", "annualSalary" : 120000, "superRate" : 0.1, "paymentStartDate" : "01 March - 31 March"}];
 		
 		var errors = jsonParser.validateEmployeeList(validJson);
 		
@@ -150,7 +149,7 @@ describe("Check employee json parser", () => {
 	
 	it("validate json with missing array", () => {
 		
-		var invalidJson = {"employees" : {"firstName" : "David", "lastName" : "Rudd", "annualSalare" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}};
+		var invalidJson = {"firstName" : "David", "lastName" : "Rudd", "annualSalare" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"};
 
 		var errors = jsonParser.validateEmployeeList(invalidJson);
 	
@@ -160,7 +159,7 @@ describe("Check employee json parser", () => {
 
 	it("validate json with missing fields", () => {
 		
-	var invalidJson = {"employees" : [{"firstNam" : "David", "lastNam" : "Rudd", "annualSalar" : 60050, "superRat" : 0.09, "paymentStartDat" : "01 March - 31 March"}]};
+	var invalidJson = [{"firstNam" : "David", "lastNam" : "Rudd", "annualSalar" : 60050, "superRat" : 0.09, "paymentStartDat" : "01 March - 31 March"}];
 
 		var errors = jsonParser.validateEmployeeList(invalidJson);
 		
@@ -169,7 +168,7 @@ describe("Check employee json parser", () => {
 
 	it("validate json with numbers are string", () => {
 		
-		var invalidJson = {"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : "60050", "superRate" : "9%", "paymentStartDate" : "01 March - 31 March"}]};
+		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : "60050", "superRate" : "9%", "paymentStartDate" : "01 March - 31 March"}];
 
 		var errors = jsonParser.validateEmployeeList(invalidJson);
 		
@@ -178,7 +177,7 @@ describe("Check employee json parser", () => {
 
 	it("validate invalid json with numbers out of range", () => {
 		
-		var invalidJson = {"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050.5, "superRate" : 2, "paymentStartDate" : "01 March - 31 March"}]};
+		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050.5, "superRate" : 2, "paymentStartDate" : "01 March - 31 March"}];
 
 		var errors = jsonParser.validateEmployeeList(invalidJson);
 		
@@ -187,7 +186,7 @@ describe("Check employee json parser", () => {
 	
 	it("validate invalid json with negative numbers", () => {
 		
-		var invalidJson = {"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : -1, "superRate" : -1, "paymentStartDate" : "01 March - 31 March"}]};
+		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : -1, "superRate" : -1, "paymentStartDate" : "01 March - 31 March"}];
 
 		var errors = jsonParser.validateEmployeeList(invalidJson);
 		
@@ -196,7 +195,7 @@ describe("Check employee json parser", () => {
 	
 	it("map object to employee list model", () => {
 		
-		var object = {employees : [{firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"}]};
+		var object = [{firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"}];
 		
 		var employees = jsonParser.mapToEmployeeList(object);
 		
@@ -225,27 +224,4 @@ describe("Check employee json parser", () => {
 		chai.expect(employee.superRate).equals(0.09);
 		chai.expect(employee.paymentStartDate).equals("01 March - 31 March");
 	});
-	
-	it("parse valid json", () => {
-		
-		var validJson = '{"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}]}';
-		
-		jsonParser.parse(validJson, (json) => {return []}, (object) => {return [new models.EmployeeModel()]}, (errors, items) => {
-			
-			chai.expect(errors).equals(null);
-			chai.expect(items.length).equals(1);
-			chai.expect(check.instanceStrict(items[0], models.EmployeeModel)).equals(true);	
-		});		
-	});
-		
-	it("parse invalid json", () => {
-		
-		var validJson = '{}';
-		
-		jsonParser.parse(validJson, (json) => {return ['error']}, (object) => {return null}, (errors, items) => {
-			
-			chai.expect(errors.length).equals(1);
-			chai.expect(items).equals(null);
-		});		
-	});	
 });

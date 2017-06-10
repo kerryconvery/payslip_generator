@@ -10,6 +10,7 @@
     "ajv": "^5.1.5",
     "body-parser": "^1.17.2",
     "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "check-types": "^7.1.5",
     "csvtojson": "^1.1.6",
     "express": "^4.15.3",
@@ -22,7 +23,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha --reporter spec tests/*.js"
+    "test": "mocha --reporter spec tests/*.js",
+	"start": "node server.js"
   },
   "author": "Kerry Convery",
   "license": "ISC"

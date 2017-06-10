@@ -11,12 +11,12 @@ describe('Test csv middleware', () => {
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/csv';
+		req.headers['content-type'] = 'application/csv';
 		req.body = '"David","Rudd",60050,9%,"01 March - 31 March"';
 		
 		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
 			
-			chai.expect(req.contentType).equals('application/json');
+			chai.expect(req.headers['content-type']).equals('application/json');
 		
 			done();
 		});
@@ -26,7 +26,7 @@ describe('Test csv middleware', () => {
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/csv';
+		req.headers['content-type'] = 'application/csv';
 		req.body = '"David","Rudd",60050,9%,"01 March - 31 March"';
 		
 		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
@@ -42,7 +42,7 @@ describe('Test csv middleware', () => {
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/csv';
+		req.headers['content-type'] = 'application/csv';
 		req.body = '"David","Rudd",60050,%9,"01 March - 31 March"';
 		
 		var res = new mocks.Response();
@@ -52,6 +52,7 @@ describe('Test csv middleware', () => {
 		res.connection.send = function(value) 
 		{
 			chai.expect(res.responseStatus).equals(400);
+			chai.expect(res.header).equals('application/json');
 		
 			done();
 		};
@@ -63,7 +64,7 @@ describe('Test csv middleware', () => {
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/csv';
+		req.headers['content-type'] = 'application/csv';
 		req.body = '';
 		
 		var res = new mocks.Response();
@@ -73,6 +74,7 @@ describe('Test csv middleware', () => {
 		res.connection.send = function(value) 
 		{
 			chai.expect(res.responseStatus).equals(400);
+			chai.expect(res.header).equals('text/plain');
 		};
 		
 		middleware.parseEmployeeCsvContent(req, res, next);
@@ -84,12 +86,12 @@ describe('Test csv middleware', () => {
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/json';
+		req.headers['content-type'] = 'application/json';
 		req.body = '{}';
 		
 		middleware.parseEmployeeCsvContent(req, new mocks.Response(), () => {
 			
-			chai.expect(req.contentType).equals('application/json');
+			chai.expect(req.headers['content-type']).equals('application/json');
 			
 			done();
 		});	
@@ -102,8 +104,8 @@ describe("Test json to employee model middleware -", () =>
 	{
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/json';
-		req.body = '{"employees" : [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}]}';
+		req.headers['content-type'] = 'application/json';
+		req.body = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 	
 		var res = new mocks.Response(); 
 		
@@ -121,14 +123,15 @@ describe("Test json to employee model middleware -", () =>
 	{
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/json';
-		req.body = '{"employees" : [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}]}';
+		req.headers['content-type'] = 'application/json';
+		req.body = [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 		
 		var res = new mocks.Response(); 
 		
 		middleware.parseEmployeeListJsonContent(req, res, () => {
 		
 			chai.expect(res.responseStatus).equals(400);
+			chai.expect(res.header).equals('application/json');
 		});	
 	});
 	
@@ -136,7 +139,7 @@ describe("Test json to employee model middleware -", () =>
 		
 		var req = new mocks.Request();
 		
-		req.contentType = 'application/json';
+		req.headers['content-type'] = 'application/json';
 		req.body = '{}';
 		
 		var next = sinon.spy();

@@ -49,8 +49,8 @@ module.exports = {
 
 		employee.firstName = row[0];
 		employee.lastName = row[1];
-		employee.annualSalary = parseInt(row[2]);
-		employee.superRate = parseInt(row[3]) / 100;
+		employee.annualSalary = parseInt(row[2], 10);
+		employee.superRate = parseInt(row[3], 10) / 100;
 		employee.paymentStartDate = row[4];			
 		
 		return employee;
@@ -66,19 +66,19 @@ module.exports = {
 		}
 		
 		//Check annual salary
-		if (isNaN(parseFloat(row[2])))
+		if (isNaN(parseFloat(row[2], 10)))
 			errors.push("Column 2 is not a number");
-		else if (parseFloat(row[2]) < 0)
+		else if (parseFloat(row[2], 10) < 0)
 			errors.push("Column 2 is less than zero");
-		else if (parseFloat(row[2]) % 1 != 0)
+		else if (parseFloat(row[2], 10) % 1 != 0)
 			errors.push("Column 2 is not a whole number");
 		
 		//Check super rate
-		if (isNaN(parseFloat(row[3])))
+		if (isNaN(parseFloat(row[3], 10)))
 			errors.push("Column 3 is not a number");
-		else if (parseFloat(row[3]) < 0)
+		else if (parseFloat(row[3], 10) < 0)
 			errors.push("Column 3 is less than zero");
-		else if (parseFloat(row[3]) % 1 != 0)
+		else if (parseFloat(row[3], 10) % 1 != 0)
 			errors.push("Column 3 is not a whole number");	
 
 		return errors;

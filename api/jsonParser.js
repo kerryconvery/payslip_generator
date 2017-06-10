@@ -5,34 +5,11 @@ var models = require('./models');
 
 module.exports = {
 
-	parse: function(json, validate, map, done) {
-		
-		try
-		{
-			var object = parser.parse(json, null, true);
-				
-			var errors = validate(object);
-			
-			if (errors.length == 0)
-			{
-				var data = map(object);
-				
-				done(null, data);
-			}
-			else
-				done(errors, null);
-			}
-		catch(e)
-		{
-			done([e], null);
-		}
-	},
-
 	mapToEmployeeList: function(objectList)
 	{		
 		var employees = new Array();
 		
-		objectList.employees.forEach((item) => {
+		objectList.forEach((item) => {
 			employees.push(module.exports.mapToEmployee(item));
 		});
 		
