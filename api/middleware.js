@@ -39,14 +39,9 @@ module.exports = {
 			jsonParser.parse(req.body, jsonParser.validateEmployeeList, jsonParser.mapToEmployeeList, (errors, employeeList) => {
 				
 				if (errors)
-				{
-					console.log(req.body);
-					console.log("errors");
 					res.status(400).send(errors);
-				}
 				else
 				{
-					console.log("not errors");
 					req.body = employeeList;
 					
 					next();
