@@ -13,7 +13,7 @@ module.exports = {
 		{
 			if (req.body == '') {
 				res.setHeader('Content-Type', 'text/plain');
-				res.status(400).send("The request body is blank");			
+				res.status(400).send("There is no data to process");			
 			}
 			else
 			{

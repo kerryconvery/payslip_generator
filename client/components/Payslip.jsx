@@ -1,18 +1,35 @@
 import React from 'react';
-import {Navbar, Nav, NavItem} from 'react-bootstrap'
 
-export default class App extends React.Component {
+export default class Payslip extends React.Component {
 
   render() {
-	const {profiles, onProfileClicked} = this.props;
+	const {payslips} = this.props;
 			
-	if (!profiles.fetched)
-		return null;
+	var headerStyle = {textAlign:"left"};
 	
-	const mappedProfiles = profiles.items.map(item => <NavItem key={item.name} onClick={onProfileClicked.bind(this, item)}>{item.name}</NavItem>)
+	var mappedItems = payslips.map((item, index) => 
+		<tr key={index}>
+			<td>{item.name}</td>
+			<td>{item.payPeriod}</td>
+			<td>{item.grossIncome}</td>
+			<td>{item.incomeTax}</td>
+			<td>{item.netIncome}</td>
+			<td>{item.superContribution}</td>
+		</tr>);
 	
-	return <Navbar className="navbar navbar-default navbar-fixed-top">
-				<Nav bsStyle="pills">{mappedProfiles}</Nav>
-			</Navbar>
+	return <div>
+		<h3>Payslips:</h3>
+		<table style={{width:"100%"}}>
+			<tr>
+				<th style={headerStyle}>Name</th>
+				<th style={headerStyle}>Pay Period</th>
+				<th style={headerStyle}>Gross Income</th>
+				<th style={headerStyle}>Income Tax</th>
+				<th style={headerStyle}>Net Income</th>
+				<th style={headerStyle}>Super Contribution</th>
+			</tr>
+			{mappedItems}
+		</table>
+		</div>
   }
 }

@@ -2,37 +2,27 @@ import React from 'react';
 import Payslip from "./Payslip.jsx";
 import Error from "./Error.jsx";
 import {connect} from "react-redux";
-import {generatePayslips, updateCsvInput} from "../actions/formActions";
+import {generatePayslips} from "../actions/formActions";
+import {If} from "./utilityComponents.jsx"
 
 @connect((store) => {
 	return {
-		formState: store.formState,
 		payslip: store.payslip,
 	};
 })
 export default class App extends React.Component {
   
   handleSubmit(event) {
-	console.log('submitting');
-	  
 	var csvInput = this.refs.csvInput;
 
-	console.log(csvInput.value);
-	
-	this.props.dispatch(generatePayslips(csvInput.value))
+	this.props.dispatch(generatePayslips(csvInput.value.trim()))
   }
-  
-  handleChange(event) {
-	  console.log('submitting');
-	  
-	  this.props.dispatch(updateCsvInput(event.target.value));
-  }
-  
+   
   componentWillMount() {
   }
   
   render() {
-	const {payslip, formState} = this.props;
+	const {payslip} = this.props;
 		
 	var If = React.createClass({
 		render: function() {
@@ -46,12 +36,15 @@ export default class App extends React.Component {
 	});
 	
 	return <div>
-				<label>CSV Input:
+				<div>CSV Input:</div>
 				<textarea ref="csvInput" cols="100" rows="10"/>
-				</label>
+				<br/>
 				<button onClick={this.handleSubmit.bind(this)}>Submit</button>
 				<If test={payslip.error != null}>
 					<Error errors={payslip.error}/>
+				</If>
+				<If test={payslip.items.length > 0}>
+					<Payslip payslips={payslip.items}/>
 				</If>
 			</div>
   }

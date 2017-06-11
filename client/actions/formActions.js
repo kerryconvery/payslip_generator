@@ -11,11 +11,3 @@ export function generatePayslips(csvData) {
 			{headers : {'Content-Type' : 'application/csv'}})
 	}
 }
-
-export function updateCsvInput(csvData) {
-	
-	return {
-		type: "CSV_DATA_CHANGED",
-		payload: csvData
-	}
-}
