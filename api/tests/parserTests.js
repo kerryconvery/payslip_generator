@@ -56,8 +56,8 @@ describe("Check employee csv parser", () => {
 			var errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
-			chai.expect(errors[0]).equals("Column 2 is not a number");
-			chai.expect(errors[1]).equals("Column 3 is not a number");
+			chai.expect(errors[0]).equals("Column 3 can only be numeric and must be a whole number (e.g. 100)");
+			chai.expect(errors[1]).equals("Column 4 can only be a numeric percentage (e.g. 10%)");
 		});		
 		
 		it("Test parser validator where annual salary is less than zero", () => {
@@ -67,8 +67,8 @@ describe("Check employee csv parser", () => {
 			var errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
-			chai.expect(errors[0]).equals("Column 2 is less than zero");
-			chai.expect(errors[1]).equals("Column 3 is less than zero");
+			chai.expect(errors[0]).equals("Column 3 is less than zero");
+			chai.expect(errors[1]).equals("Column 4 can only be a numeric percentage (e.g. 10%)");
 		});		
 		
 		it("Test parser validator where annual salary or super rate contain decimals", () => {
@@ -78,8 +78,8 @@ describe("Check employee csv parser", () => {
 			var errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
-			chai.expect(errors[0]).equals("Column 2 is not a whole number");
-			chai.expect(errors[1]).equals("Column 3 is not a whole number");
+			chai.expect(errors[0]).equals("Column 3 can only be numeric and must be a whole number (e.g. 100)");
+			chai.expect(errors[1]).equals("Column 4 can only be a numeric percentage (e.g. 10%)");
 		});				
 });	
 	
@@ -126,7 +126,7 @@ describe("Test csv parser", () =>{
 			
 				chai.expect(errors.length).equals(1);
 				chai.expect(employees).equals(null);
-				chai.expect(errors[0]).equals("Row 0 Column 3 is not a number");
+				chai.expect(errors[0]).equals("Row 1 Column 3 is not a number");
 				
 				done();
 			}

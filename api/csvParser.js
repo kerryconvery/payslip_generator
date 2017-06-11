@@ -7,7 +7,7 @@ module.exports = {
 	{
 		var items = Array();
 		var csvErrors = null;
-		var rowCount = 0;
+		var rowCount = 1;
 		
 		try
 		{
@@ -66,20 +66,14 @@ module.exports = {
 		}
 		
 		//Check annual salary
-		if (isNaN(parseFloat(row[2], 10)))
-			errors.push("Column 2 is not a number");
+		if (!row[2].match(/^[-]?[\d]*$/))
+			errors.push("Column 3 can only be numeric and must be a whole number (e.g. 100)");
 		else if (parseFloat(row[2], 10) < 0)
-			errors.push("Column 2 is less than zero");
-		else if (parseFloat(row[2], 10) % 1 != 0)
-			errors.push("Column 2 is not a whole number");
+			errors.push("Column 3 is less than zero");
 		
 		//Check super rate
-		if (isNaN(parseFloat(row[3], 10)))
-			errors.push("Column 3 is not a number");
-		else if (parseFloat(row[3], 10) < 0)
-			errors.push("Column 3 is less than zero");
-		else if (parseFloat(row[3], 10) % 1 != 0)
-			errors.push("Column 3 is not a whole number");	
+		if (!row[3].match(/^[\d]*%?$/))
+			errors.push("Column 4 can only be a numeric percentage (e.g. 10%)");
 
 		return errors;
 	}
