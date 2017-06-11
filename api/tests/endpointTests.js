@@ -13,7 +13,7 @@ describe("Test endpoints", () => {
 		var employee = 'David, Rudd,60050,9%,01 March-31 March';
 		
 		chai.request(server)
-			.post('/payslip')
+			.post('/payslips')
 			.set('content-type', 'application/csv')
 			.send(employee)
 			.end((err, res) => {
@@ -31,7 +31,7 @@ describe("Test endpoints", () => {
 		var employee = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 		
 		chai.request(server)
-			.post('/payslip')
+			.post('/payslips')
 			.set('content-type', 'application/json')
 			.send(JSON.stringify(employee))
 			.end((err, res) => {
@@ -48,7 +48,7 @@ describe("Test endpoints", () => {
 		var employee = [{"firstName" : "David", }];
 		
 		chai.request(server)
-			.post('/payslip')
+			.post('/payslips')
 			.set('content-type', 'application/json')
 			.send(JSON.stringify(employee))
 			.end((err, res) => {
@@ -63,7 +63,7 @@ describe("Test endpoints", () => {
 		var employee = 'David, Rudd,60050,%9,01 March-31 March';
 		
 		chai.request(server)
-			.post('/payslip')
+			.post('/payslips')
 			.set('content-type', 'application/csv')
 			.send(employee)
 			.end((err, res) => {
@@ -79,7 +79,7 @@ describe("Test endpoints", () => {
 		var employee = [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 		
 		chai.request(server)
-			.post('/payslip')
+			.post('/payslips')
 			.set('content-type', 'application/json')
 			.send(JSON.stringify(employee))
 			.end((err, res) => {
