@@ -6,7 +6,7 @@
   "author": "Kerry Convery",
   "license": "ISC",
   "scripts": {
-    "test": "mocha -w tests/helpers/browser.js tests/*.spec.js",
+    "test": "mocha -w tests/helpers/browser.js tests/*.js",
     "start": "./node_modules/.bin/webpack-dev-server"
   },
   "dependencies": {
