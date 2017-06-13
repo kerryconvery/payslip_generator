@@ -1,7 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 export default class Error extends React.Component {
+	
+	static defaultProps = {
+		errors: []
+	};
 
+	static PropTypes = {
+		errors: PropTypes.array
+	};
+	
   render() {
 	const {errors} = this.props;
 	

@@ -13,6 +13,7 @@ import {If} from "./utilityComponents.jsx"
 export default class App extends React.Component {
   
   handleSubmit(event) {
+	  
 	var csvInput = this.refs.csvInput;
 
 	this.props.dispatch(generatePayslips(csvInput.value.trim()))
@@ -23,17 +24,6 @@ export default class App extends React.Component {
   
   render() {
 	const {payslip} = this.props;
-		
-	var If = React.createClass({
-		render: function() {
-			if (this.props.test) {
-				return this.props.children;
-			}
-			else {
-				return false;
-			}
-		}
-	});
 	
 	return <div>
 				<div>CSV Input:</div>

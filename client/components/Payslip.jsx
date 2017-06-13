@@ -1,7 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 export default class Payslip extends React.Component {
 
+	static defaultProps = {
+		payslips: []
+	};
+
+	static PropTypes = {
+		payslips: PropTypes.array
+	};
+	
   render() {
 	const {payslips} = this.props;
 			
