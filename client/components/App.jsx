@@ -14,7 +14,7 @@ export default class App extends React.Component {
   
   handleSubmit(event) {
 	  
-	var csvInput = this.refs.csvInput;
+	const csvInput = this.refs.csvInput;
 
 	this.props.dispatch(generatePayslips(csvInput.value.trim()))
   }

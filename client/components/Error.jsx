@@ -14,7 +14,7 @@ export default class Error extends React.Component {
   render() {
 	const {errors} = this.props;
 	
-	var mappedErrors ='';
+	let mappedErrors ='';
 	
 	if (Array.isArray(errors))
 		mappedErrors = errors.map((item, index) => <li key={index}>{item}</li>);

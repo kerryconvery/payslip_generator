@@ -14,9 +14,9 @@ export default class Payslip extends React.Component {
   render() {
 	const {payslips} = this.props;
 			
-	var headerStyle = {textAlign:"left"};
+	const headerStyle = {textAlign:"left"};
 	
-	var mappedItems = payslips.map((item, index) => 
+	const mappedItems = payslips.map((item, index) => 
 		<tr key={index}>
 			<td>{item.name}</td>
 			<td>{item.payPeriod}</td>
