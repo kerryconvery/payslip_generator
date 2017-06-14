@@ -22,10 +22,10 @@ module.exports = {
     loaders: [
       { test: /\.js$/, 
 		loader: 'babel-loader', 
-		exclude: /node_modules/ },
+		exclude: [path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'tests')]},
       { test: /\.jsx$/, 
 		loader: 'babel-loader',
-		exclude: /node_modules/ },
+		exclude: [path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'tests')]},
 	  {	test:/\.css$/,
 		loader: "style-loader!css-loader"}
     ]
