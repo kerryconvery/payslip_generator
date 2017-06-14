@@ -29,15 +29,19 @@ export default class Payslip extends React.Component {
 	return <div>
 		<h3>Payslips:</h3>
 		<table style={{width:"100%"}}>
-			<tr>
-				<th style={headerStyle}>Name</th>
-				<th style={headerStyle}>Pay Period</th>
-				<th style={headerStyle}>Gross Income</th>
-				<th style={headerStyle}>Income Tax</th>
-				<th style={headerStyle}>Net Income</th>
-				<th style={headerStyle}>Super Contribution</th>
-			</tr>
-			{mappedItems}
+			<thead>
+				<tr>
+					<th style={headerStyle}>Name</th>
+					<th style={headerStyle}>Pay Period</th>
+					<th style={headerStyle}>Gross Income</th>
+					<th style={headerStyle}>Income Tax</th>
+					<th style={headerStyle}>Net Income</th>
+					<th style={headerStyle}>Super Contribution</th>
+				</tr>
+			</thead>
+			<tbody>
+				{mappedItems}
+			</tbody>
 		</table>
 		</div>
   }

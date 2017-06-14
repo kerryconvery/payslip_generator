@@ -38,7 +38,7 @@ describe("Reducer Tests.", () => {
 		expect(state.error).equals(null);
 	}),
 	
-	it("Check error state", () => {
+	it("Check error state were error is a string", () => {
 		
 		let state = payslipReducer({
 				items: [], 
@@ -51,6 +51,22 @@ describe("Reducer Tests.", () => {
 		expect(state.items.length).equals(0);
 		expect(state.fetching).equals(false);
 		expect(state.fetched).equals(false);
-		expect(state.error).equals("error");
+		expect(Array.isArray(state.error)).equals(true);
+	}),
+	
+	it("Check error state were error is an array", () => {
+		
+		let state = payslipReducer({
+				items: [], 
+				fetching: true, 
+				fetched: false,
+				error: null}, {
+				type: "GENERATE_PAYSLIPS_REJECTED",
+				payload: {response:{data:["error"]}}});
+	
+		expect(state.items.length).equals(0);
+		expect(state.fetching).equals(false);
+		expect(state.fetched).equals(false);
+		expect(Array.isArray(state.error)).equals(true);
 	})
 });

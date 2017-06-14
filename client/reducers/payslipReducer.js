@@ -10,7 +10,12 @@ export const payslipReducer = (
 		case "GENERATE_PAYSLIPS_PENDING": 
 			return {...state, fetching: true}
 		case "GENERATE_PAYSLIPS_REJECTED":
-			return {...state, fetching: false, items: [], error: action.payload.response.data}
+		{
+			if (Array.isArray(action.payload.response.data))
+				return {...state, fetching: false, items: [], error: action.payload.response.data};
+			else
+				return {...state, fetching: false, items: [], error: [action.payload.response.data]};
+		}
 		case "GENERATE_PAYSLIPS_FULFILLED":
 			return {...state, fetching: false, fetched: true, error: null, items: action.payload.data}
 	};

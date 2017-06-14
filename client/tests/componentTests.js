@@ -10,8 +10,9 @@ import logger from "redux-logger"
 import promise from "redux-promise-middleware"
 import {combineReducers} from "redux"
 import {payslipReducer} from "../reducers/payslipReducer"
+import * as formActions from "../actions/formActions"
 import {Provider} from "react-redux"
-import sinon from "sinon"
+import sinon from 'sinon'
 
 describe("Utility Components", () => {
 	
@@ -245,13 +246,14 @@ describe("Utility Components", () => {
 				const middleware = applyMiddleware(promise(), logger())
 
 				const store = createStore(reducers, {payslip}, middleware);
-			
+				
+				const stub = sinon.stub(formActions, 'generatePayslips').callsFake((csvData) => { return {type: "", payload: ""} })
 				
 				const wrapper = mount(<Provider store={store}><App/></Provider>);
-			
-				const stub = sinon.stub(wrapper.prototype, 'handleSubmit').returns(true)
-			
-				wrapper.find('button').simulate('click')	
+				
+				wrapper.find('button').simulate('click');
+
+				expect(stub.called).equals(true);
 			})
 		});
 	})
