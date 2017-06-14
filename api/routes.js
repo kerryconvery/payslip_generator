@@ -10,7 +10,8 @@ module.exports = function(app) {
 			const payslips = new Array();
 			
 			try {
-				req.body.forEach((item) => payslips.push(lib.getEmployeePayslip(item)));
+				for(let index = 0; index < req.body.length; index++)
+					payslips.push(lib.getEmployeePayslip(req.body[index]));
 				
 				res.setHeader('Content-Type', 'application/json');
 				res.send(JSON.stringify(payslips));
