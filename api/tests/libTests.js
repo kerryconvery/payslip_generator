@@ -1,6 +1,6 @@
-var chai = require("chai");
-var lib = require("../lib");
-var models = require("../models");
+const chai = require("chai");
+const lib = require("../lib");
+const models = require("../models");
 
 describe("Calculate monthly gross income", () => {
 
@@ -83,7 +83,7 @@ describe("Payslip", () =>
 {
 	it("Test getting new payslip", () => {
 		
-		var employee = new models.EmployeeModel();
+		const employee = new models.EmployeeModel();
 		
 		employee.firstName = "David";
 		employee.lastName = "Rudd";
@@ -91,7 +91,7 @@ describe("Payslip", () =>
 		employee.superRate = 0.09;
 		employee.paymentStartDate = "01 March - 31 March";
 		
-		var payslip = lib.getEmployeePayslip(employee);
+		const payslip = lib.getEmployeePayslip(employee);
 		
 		chai.expect(payslip.name).to.equal("David Rudd");
 		chai.expect(payslip.payPeriod).to.equal("01 March - 31 March");
@@ -108,7 +108,7 @@ describe("Payslip", () =>
 	
 	it("Test missing employee field", () => {
 	
-		var fakeInstance = {};
+		const fakeInstance = {};
 		
 		chai.expect(() => {lib.getEmployeePayslip(fakeInstance)}).to.throw("Parameter employee is not an instance of EmployeeModel");
 	});

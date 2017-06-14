@@ -5,7 +5,7 @@ describe("Reducer Tests.", () => {
 	
 	it("Check default state", () => {
 		
-		let state = payslipReducer(undefined, {type:""});
+		const state = payslipReducer(undefined, {type:""});
 	
 		expect(state.items.length).equals(0);
 		expect(state.fetching).equals(false);
@@ -15,7 +15,7 @@ describe("Reducer Tests.", () => {
 	
 	it("Check fetching state", () => {
 		
-		let state = payslipReducer({items:[], fetching:false, fetched:false,error:null}, {type:"GENERATE_PAYSLIPS_PENDING"});
+		const state = payslipReducer({items:[], fetching:false, fetched:false,error:null}, {type:"GENERATE_PAYSLIPS_PENDING"});
 	
 		expect(state.items.length).equals(0);
 		expect(state.fetching).equals(true);
@@ -24,7 +24,7 @@ describe("Reducer Tests.", () => {
 	}),
 	
 	it("Check fetched state", () => {
-		let state = payslipReducer({
+		const state = payslipReducer({
 				items: [], 
 				fetching: true, 
 				fetched: false,
@@ -40,7 +40,7 @@ describe("Reducer Tests.", () => {
 	
 	it("Check error state were error is a string", () => {
 		
-		let state = payslipReducer({
+		const state = payslipReducer({
 				items: [], 
 				fetching: true, 
 				fetched: false,
@@ -56,7 +56,7 @@ describe("Reducer Tests.", () => {
 	
 	it("Check error state were error is an array", () => {
 		
-		let state = payslipReducer({
+		const state = payslipReducer({
 				items: [], 
 				fetching: true, 
 				fetched: false,

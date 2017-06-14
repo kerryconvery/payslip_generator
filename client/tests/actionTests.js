@@ -13,7 +13,7 @@ describe("Action Tests.", () => {
 			.post('/payslips')
 			.reply(200, {body: ["response data"]})
 			
-		let action = generatePayslips("test data");
+		const action = generatePayslips("test data");
 		
 		action.payload.then((payload) => {
 			

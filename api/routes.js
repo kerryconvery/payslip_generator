@@ -1,5 +1,5 @@
-var middleware = require('./middleware');
-var lib = require('./lib');
+const middleware = require('./middleware');
+const lib = require('./lib');
 
 module.exports = function(app) {
 
@@ -7,7 +7,7 @@ module.exports = function(app) {
 		
 		if(Array.isArray(req.body))
 		{		
-			var payslips = new Array();
+			const payslips = new Array();
 			
 			try {
 				req.body.forEach((item) => payslips.push(lib.getEmployeePayslip(item)));
@@ -24,8 +24,6 @@ module.exports = function(app) {
 		}
 		else
 		{
-			console.log('Expected an array of employees');
-			
 			res.setHeader('Content-Type', 'text/plain');
 			res.status(400).send("Expected an array of employees");
 		}

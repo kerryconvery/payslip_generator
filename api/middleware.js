@@ -1,13 +1,13 @@
-var csvParser = require('./csvParser');
-var jsonParser = require('./jsonParser');
-var schema = require('./schema');
-var typeis = require('type-is');
+const csvParser = require('./csvParser');
+const jsonParser = require('./jsonParser');
+const schema = require('./schema');
+const typeis = require('type-is');
 
 module.exports = {
 	
 	parseEmployeeCsvContent: function(req, res, next)
 	{
-		var contentType = req.headers['content-type'];
+		const contentType = req.headers['content-type'];
 		
 		if (contentType && typeis.is(contentType, ['application/csv']))
 		{
@@ -39,11 +39,11 @@ module.exports = {
 	
 	parseEmployeeListJsonContent: function(req, res, next)
 	{
-		var contentType = req.headers['content-type'];
+		const contentType = req.headers['content-type'];
 		
 		if (contentType && typeis.is(contentType, ['application/json']))
 		{
-			var errors = jsonParser.validateEmployeeList(req.body);
+			const errors = jsonParser.validateEmployeeList(req.body);
 				
 			if (errors.length > 0) {
 				res.setHeader('Content-Type', 'application/json');

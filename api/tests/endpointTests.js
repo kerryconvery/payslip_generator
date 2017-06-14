@@ -1,8 +1,8 @@
-var chai = require('chai');
-var chaiHttp = require('chai-http');
-var server = require('../server');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../server');
 
-let should = chai.should();
+const should = chai.should();
 
 chai.use(chaiHttp);
 
@@ -10,7 +10,7 @@ describe("Test endpoints", () => {
 	
 	it("Test valid payslip returned when valid employee csv data supplied", (done) => {
 		
-		var employee = 'David, Rudd,60050,9%,01 March-31 March';
+		const employee = 'David, Rudd,60050,9%,01 March-31 March';
 		
 		chai.request(server)
 			.post('/payslips')
@@ -28,7 +28,7 @@ describe("Test endpoints", () => {
 
 	it("Test valid payslip returned when valid employee json data supplied", (done) => {
 		
-		var employee = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
+		const employee = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 		
 		chai.request(server)
 			.post('/payslips')
@@ -45,7 +45,7 @@ describe("Test endpoints", () => {
 	
 	it("Test 400 error returned with validation error when invalid json data supplied", () => {
 		
-		var employee = [{"firstName" : "David", }];
+		const employee = [{"firstName" : "David", }];
 		
 		chai.request(server)
 			.post('/payslips')
@@ -60,7 +60,7 @@ describe("Test endpoints", () => {
 	
 	it("Test valid payslip returned when valid employee csv data supplied", (done) => {
 		
-		var employee = 'David, Rudd,60050,%9,01 March-31 March';
+		const employee = 'David, Rudd,60050,%9,01 March-31 March';
 		
 		chai.request(server)
 			.post('/payslips')
@@ -76,7 +76,7 @@ describe("Test endpoints", () => {
 	
 	it("Test valid payslip returned when invalid employee json data supplied", (done) => {
 		
-		var employee = [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
+		const employee = [{"firstNam" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"}];
 		
 		chai.request(server)
 			.post('/payslips')

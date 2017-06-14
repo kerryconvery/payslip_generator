@@ -11,9 +11,9 @@ module.exports = {
 		if (grossAnnualIncome < 0)
 			return null;
 		
-		for(var taxRateIndex = 0; taxRateIndex < this.taxTable.length; taxRateIndex++)
+		for(let taxRateIndex = 0; taxRateIndex < this.taxTable.length; taxRateIndex++)
 		{
-			var taxRate = this.taxTable[taxRateIndex];
+			const taxRate = this.taxTable[taxRateIndex];
 
 			
 			if (grossAnnualIncome >= taxRate.fromAmount && grossAnnualIncome <= taxRate.toAmount)

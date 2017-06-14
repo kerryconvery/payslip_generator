@@ -1,41 +1,41 @@
-var csv = require("csvtojson");
-var models = require("./models");
+const csv = require("csvtojson");
+const models = require("./models");
 
 module.exports = {
 	
 	parse: function(csvString, validate, map, done)
 	{
-		var items = Array();
-		var csvErrors = null;
-		var rowCount = 1;
+		const items = Array();
+		let csvErrors = null;
+		let rowCount = 1;
 		
 		try
 		{
-		csv({noheader:true})
-			.fromString(csvString)
-			.on('csv', (row) => {
-					
-				var errors = validate(row);
-					
-				if (errors.length == 0)
-					items.push(map(row));
-				else {
-					if (csvErrors == null)
-						csvErrors = new Array();
-					
-					errors.forEach((error) => {csvErrors.push("Row " + rowCount + " " + error)});
-				}
-			
-				rowCount++;
-			})
-			.on('done', () => {
+			csv({noheader:true})
+				.fromString(csvString)
+				.on('csv', (row) => {
+						
+					const errors = validate(row);
+						
+					if (errors.length == 0)
+						items.push(map(row));
+					else {
+						if (csvErrors == null)
+							csvErrors = new Array();
+						
+						errors.forEach((error) => {csvErrors.push("Row " + rowCount + " " + error)});
+					}
 				
-				if (csvErrors)
-					done(csvErrors, null);
-				else
-					done(null, items)
-				
-			})
+					rowCount++;
+				})
+				.on('done', () => {
+					
+					if (csvErrors)
+						done(csvErrors, null);
+					else
+						done(null, items)
+					
+				})
 		}
 		catch(e)
 		{
@@ -45,7 +45,7 @@ module.exports = {
 
 	mapToEmployee: function(row)
 	{				
-		var employee = new models.EmployeeModel();
+		const employee = new models.EmployeeModel();
 
 		employee.firstName = row[0];
 		employee.lastName = row[1];
@@ -58,7 +58,7 @@ module.exports = {
 	
 	validateEmployee: function(row)
 	{
-		var errors = [];
+		const errors = [];
 		
 		if (row.length < 5) {
 			errors.push("Expected 5 columns");

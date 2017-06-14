@@ -1,15 +1,15 @@
-var chai = require('chai');
-var middleware = require('../middleware');
-var check = require("check-types");
-var models = require("../models");
-var mocks = require("./mocks");
-var sinon = require("sinon");
+const chai = require('chai');
+const middleware = require('../middleware');
+const check = require("check-types");
+const models = require("../models");
+const mocks = require("./mocks");
+const sinon = require("sinon");
 	
 describe('Test csv middleware', () => {
 
 	it('When the request content type is application/csv', (done) => {
 		
-		var req = new mocks.Request();
+		const req = new mocks.Request();
 		
 		req.headers['content-type'] = 'application/csv';
 		req.body = '"David","Rudd",60050,9%,"01 March - 31 March"';

@@ -1,12 +1,12 @@
-var Validator = require('jsonschema').Validator;
-var schema = require('./schema');
-var models = require('./models');
+const Validator = require('jsonschema').Validator;
+const schema = require('./schema');
+const models = require('./models');
 
 module.exports = {
 
 	mapToEmployeeList: function(objectList)
 	{		
-		var employees = new Array();
+		const employees = new Array();
 		
 		objectList.forEach((item) => {
 			employees.push(module.exports.mapToEmployee(item));
@@ -17,7 +17,7 @@ module.exports = {
 	
 	mapToEmployee: function(object)
 	{
-		var employee = new models.EmployeeModel();
+		const employee = new models.EmployeeModel();
 		
 		employee.firstName = object.firstName;
 		employee.lastName = object.lastName;
@@ -30,9 +30,9 @@ module.exports = {
 	
 	validateEmployeeList: function(json)
 	{
-		var validator = new Validator();
+		const validator = new Validator();
 
-		var results = validator.validate(json, schema.employeeList)
+		const results = validator.validate(json, schema.employeeList)
 
 		if (results.errors && results.errors.length > 0)
 			return results.errors;

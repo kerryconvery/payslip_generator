@@ -1,26 +1,26 @@
-var chai = require("chai");
-var csvParser = require("../csvParser");
-var jsonParser = require("../jsonParser");
-var models = require("../models");
-var check = require("check-types");
+const chai = require("chai");
+const csvParser = require("../csvParser");
+const jsonParser = require("../jsonParser");
+const models = require("../models");
+const check = require("check-types");
 
 
 describe("Check employee csv parser", () => {
 			
 		it ("Test mapper return type", () =>
 		{
-			var row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
+			const row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
 			
-			var employee = csvParser.mapToEmployee(row);
+			const employee = csvParser.mapToEmployee(row);
 			
 			chai.expect(check.instanceStrict(employee, models.EmployeeModel)).equals(true);			
 		})
 		
 		it("Test parser mapper", () => {
 			
-			var row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
+			const row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
 			
-			var employee = csvParser.mapToEmployee(row);
+			const employee = csvParser.mapToEmployee(row);
 			
 			chai.expect(employee.firstName).equals("David");
 			chai.expect(employee.lastName).equals("Rudd");
@@ -31,9 +31,9 @@ describe("Check employee csv parser", () => {
 		
 		it("Test parser validator", () => {
 			
-			var row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
+			const row = ["David", "Rudd", "60050", "9%", "01 March - 31 March"];
 			
-			var errors = csvParser.validateEmployee(row);
+			const errors = csvParser.validateEmployee(row);
 			
 			chai.expect(Array.isArray(errors)).equals(true);
 			chai.expect(errors.length).equals(0);
@@ -41,9 +41,9 @@ describe("Check employee csv parser", () => {
 		
 		it("Test parser validator with missing column", () => {
 			
-			var row = ["David", "Rudd", "60050", "9%"];
+			const row = ["David", "Rudd", "60050", "9%"];
 			
-			var errors = csvParser.validateEmployee(row);
+			const errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(1);
 			chai.expect(errors[0]).equals("Expected 5 columns");
@@ -51,9 +51,9 @@ describe("Check employee csv parser", () => {
 		
 		it("Test parser validator where annual salary and super rate are not numbers", () => {
 			
-			var row = ["David", "Rudd", "abc", "%9", "01 March - 31 March"];
+			const row = ["David", "Rudd", "abc", "%9", "01 March - 31 March"];
 			
-			var errors = csvParser.validateEmployee(row);
+			const errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
 			chai.expect(errors[0]).equals("Column 3 can only be numeric and must be a whole number (e.g. 100)");
@@ -62,9 +62,9 @@ describe("Check employee csv parser", () => {
 		
 		it("Test parser validator where annual salary is less than zero", () => {
 			
-			var row = ["David", "Rudd", "-1", "-9%", "01 March - 31 March"];
+			const row = ["David", "Rudd", "-1", "-9%", "01 March - 31 March"];
 			
-			var errors = csvParser.validateEmployee(row);
+			const errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
 			chai.expect(errors[0]).equals("Column 3 is less than zero");
@@ -73,9 +73,9 @@ describe("Check employee csv parser", () => {
 		
 		it("Test parser validator where annual salary or super rate contain decimals", () => {
 			
-			var row = ["David", "Rudd", "60050.5", "0.09", "01 March - 31 March"];
+			const row = ["David", "Rudd", "60050.5", "0.09", "01 March - 31 March"];
 			
-			var errors = csvParser.validateEmployee(row);
+			const errors = csvParser.validateEmployee(row);
 			
 			chai.expect(errors.length).equals(2);
 			chai.expect(errors[0]).equals("Column 3 can only be numeric and must be a whole number (e.g. 100)");
@@ -138,10 +138,10 @@ describe("Check employee json parser", () => {
 	
 	it("validate valid json", () => {
 		
-		var validJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"},  
+		const validJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"},  
 			 {"firstName" : "Ryan", "lastName" : "Chen", "annualSalary" : 120000, "superRate" : 0.1, "paymentStartDate" : "01 March - 31 March"}];
 		
-		var errors = jsonParser.validateEmployeeList(validJson);
+		const errors = jsonParser.validateEmployeeList(validJson);
 		
 		chai.expect(Array.isArray(errors)).equals(true);
 		chai.expect(errors.length).equals(0);
@@ -149,9 +149,9 @@ describe("Check employee json parser", () => {
 	
 	it("validate json with missing array", () => {
 		
-		var invalidJson = {"firstName" : "David", "lastName" : "Rudd", "annualSalare" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"};
+		const invalidJson = {"firstName" : "David", "lastName" : "Rudd", "annualSalare" : 60050, "superRate" : 0.09, "paymentStartDate" : "01 March - 31 March"};
 
-		var errors = jsonParser.validateEmployeeList(invalidJson);
+		const errors = jsonParser.validateEmployeeList(invalidJson);
 	
 		chai.expect(Array.isArray(errors)).equals(true);
 		chai.expect(errors.length).equals(1);
@@ -159,45 +159,45 @@ describe("Check employee json parser", () => {
 
 	it("validate json with missing fields", () => {
 		
-	var invalidJson = [{"firstNam" : "David", "lastNam" : "Rudd", "annualSalar" : 60050, "superRat" : 0.09, "paymentStartDat" : "01 March - 31 March"}];
+	const invalidJson = [{"firstNam" : "David", "lastNam" : "Rudd", "annualSalar" : 60050, "superRat" : 0.09, "paymentStartDat" : "01 March - 31 March"}];
 
-		var errors = jsonParser.validateEmployeeList(invalidJson);
+		const errors = jsonParser.validateEmployeeList(invalidJson);
 		
 		chai.expect(errors.length).equals(5);
 	});
 
 	it("validate json with numbers are string", () => {
 		
-		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : "60050", "superRate" : "9%", "paymentStartDate" : "01 March - 31 March"}];
+		const invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : "60050", "superRate" : "9%", "paymentStartDate" : "01 March - 31 March"}];
 
-		var errors = jsonParser.validateEmployeeList(invalidJson);
+		const errors = jsonParser.validateEmployeeList(invalidJson);
 		
 		chai.expect(errors.length).equals(2);
 	});
 
 	it("validate invalid json with numbers out of range", () => {
 		
-		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050.5, "superRate" : 2, "paymentStartDate" : "01 March - 31 March"}];
+		const invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : 60050.5, "superRate" : 2, "paymentStartDate" : "01 March - 31 March"}];
 
-		var errors = jsonParser.validateEmployeeList(invalidJson);
+		const errors = jsonParser.validateEmployeeList(invalidJson);
 		
 		chai.expect(errors.length).equals(2);
 	});	
 	
 	it("validate invalid json with negative numbers", () => {
 		
-		var invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : -1, "superRate" : -1, "paymentStartDate" : "01 March - 31 March"}];
+		const invalidJson = [{"firstName" : "David", "lastName" : "Rudd", "annualSalary" : -1, "superRate" : -1, "paymentStartDate" : "01 March - 31 March"}];
 
-		var errors = jsonParser.validateEmployeeList(invalidJson);
+		const errors = jsonParser.validateEmployeeList(invalidJson);
 		
 		chai.expect(errors.length).equals(2);
 	});
 	
 	it("map object to employee list model", () => {
 		
-		var object = [{firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"}];
+		const object = [{firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"}];
 		
-		var employees = jsonParser.mapToEmployeeList(object);
+		const employees = jsonParser.mapToEmployeeList(object);
 		
 		chai.expect(employees.length).equals(1);
 		
@@ -212,9 +212,9 @@ describe("Check employee json parser", () => {
 	
 	it("map object to employee model", () => {
 		
-		var object = {firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"};
+		const object = {firstName: "David", lastName : "Rudd", annualSalary : 60050, superRate : 0.09, paymentStartDate : "01 March - 31 March"};
 		
-		var employee = jsonParser.mapToEmployee(object);
+		const employee = jsonParser.mapToEmployee(object);
 		
 		chai.expect(check.instanceStrict(employee, models.EmployeeModel)).equals(true);	
 	

@@ -1,9 +1,9 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var config = require("./config");
-var cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const config = require("./config");
+const cors = require('cors');
 
-var app = express();
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(err, req, res, next) {
   
   if (err.status == 500) {
+	 //log the error and return a generic message
 	console.log(err);
 	res.status(500).send('Something broke!');
   }
@@ -19,9 +20,9 @@ app.use(function(err, req, res, next) {
 	  res.status(err.status).send(err.stack);
 });
 
-var routes = require("./routes.js")(app);
+const routes = require("./routes.js")(app);
 
-var server = app.listen(config.server_port, function() {
+const server = app.listen(config.server_port, function() {
   console.log("Listening on port %s", server.address().port);
 });
 
