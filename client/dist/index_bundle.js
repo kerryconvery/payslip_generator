@@ -13398,6 +13398,7 @@ var payslipReducer = exports.payslipReducer = function () {
 				return _extends({}, state, { fetching: true });
 			case "GENERATE_PAYSLIPS_REJECTED":
 				{
+					if (!action.payload.response) return _extends({}, state, { fetching: false, items: [], error: ['There was no response from the server'] });
 					if (Array.isArray(action.payload.response.data)) return _extends({}, state, { fetching: false, items: [], error: action.payload.response.data });else return _extends({}, state, { fetching: false, items: [], error: [action.payload.response.data] });
 				}
 			case "GENERATE_PAYSLIPS_FULFILLED":

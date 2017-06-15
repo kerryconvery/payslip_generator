@@ -68,5 +68,21 @@ describe("Payslip reducer", () => {
 		expect(state.fetching).equals(false);
 		expect(state.fetched).equals(false);
 		expect(Array.isArray(state.error)).equals(true);
+	}),
+	
+	it("should return error state when there is no response", () => {
+		
+		const state = payslipReducer({
+				items: [], 
+				fetching: true, 
+				fetched: false,
+				error: null}, {
+				type: "GENERATE_PAYSLIPS_REJECTED",
+				payload: {}});
+	
+		expect(state.items.length).equals(0);
+		expect(state.fetching).equals(false);
+		expect(state.fetched).equals(false);
+		expect(Array.isArray(state.error)).equals(true);
 	})
 });

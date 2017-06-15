@@ -11,6 +11,8 @@ export const payslipReducer = (
 			return {...state, fetching: true}
 		case "GENERATE_PAYSLIPS_REJECTED":
 		{
+			if (!action.payload.response)
+				return {...state, fetching: false, items: [], error: ['There was no response from the server']};	
 			if (Array.isArray(action.payload.response.data))
 				return {...state, fetching: false, items: [], error: action.payload.response.data};
 			else
