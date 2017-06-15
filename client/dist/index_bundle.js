@@ -13005,7 +13005,7 @@ function generatePayslips(csvData) {
 
 	return {
 		type: 'GENERATE_PAYSLIPS',
-		payload: _axios2["default"].post(_common.serverUrl + "/payslips", csvData, { headers: { 'Content-Type': 'application/csv' } })
+		payload: _axios2["default"].post(_common.serverUrl + "/api/v1.0/payslips", csvData, { headers: { 'Content-Type': 'application/csv' } })
 	};
 }
 

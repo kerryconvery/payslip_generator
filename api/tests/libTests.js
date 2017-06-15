@@ -4,68 +4,68 @@ const models = require("../models");
 
 describe("Calculate monthly gross income", () => {
 
-	it("Calculate monthly salary exact", () => {
+	it("should return exact monthly salary", () => {
 		chai.expect(lib.calculateMonthlyAmount(1200)).to.equal(100); 
 	});
 	
-	it("Calculate monthly salary round down", () => {
+	it("should return monthly salary rounded down", () => {
 		chai.expect(lib.calculateMonthlyAmount(1000)).to.equal(83);
 	});
 	
-	it("Calculate monthly salary round up", () => {
+	it("should return monthly salary rounded up", () => {
 		chai.expect(lib.calculateMonthlyAmount(500)).to.equal(42);
 	});
 	
-	it("Calculate monthly salary 0", () => {
+	it("should return monthly salary 0", () => {
 		chai.expect(lib.calculateMonthlyAmount(0)).to.equal(0);
 	});
 });
 
 describe("Nearest whole dollar rounding", () => {
 	
-	it("No rounding required", () => {
+	it("no rounding required", () => {
 		chai.expect(lib.roundToNearestWholeDollar(100)).to.equal(100);
 	});
 
-	it("Round up", () => {
+	it("should round up", () => {
 		chai.expect(lib.roundToNearestWholeDollar(100.90)).to.equal(101);
 	});
 	
-	it("Round down", () => {
+	it("should round down", () => {
 		chai.expect(lib.roundToNearestWholeDollar(100.10)).to.equal(100);
 	});
 	
-	it("Round on pivot", () => {
+	it("should round on pivot", () => {
 		chai.expect(lib.roundToNearestWholeDollar(100.50)).to.equal(101);
 	});
 });
 
-describe("Income tax", () => {
+describe("Calculate Income tax", () => {
 
-	it("Income tax for $60,050 Annual salary", () => {
+	it("should return 922 income tax for $60,050 annual salary", () => {
 		chai.expect(lib.calculateIncomeTax(60050)).to.equal(922);
 	})
 	
-	it("Income tax for $0 Annual salary", () => {
+	it("should return 0 income tax for $0 annual salary", () => {
 		chai.expect(lib.calculateIncomeTax(0)).to.equal(0);
 	})
 	
-	it("Income tax for $200000 Annual salary", () => {
+	it("should return 5296 Income tax for $200000 Annual salary", () => {
 		chai.expect(lib.calculateIncomeTax(200000)).to.equal(5296);
 	});
 	
-	it("Annual salary outside lower bound", () => {
+	it("should return error for annual salary outside lower bound", () => {
 		chai.expect(() => {lib.calculateIncomeTax(-1)}).to.throw("-1 does not fit into any of the defined tax brackets");
 	})
 
-	it("Annual salary outside upper bound", () => {
+	it("should still return a value for annual salary outside upper bound", () => {
 		chai.expect(lib.calculateIncomeTax(9999999999)).to.equal(374997796);
 	})	
 });
 
-describe("Net tax amount", () =>
+describe("Calculate net tax amount", () =>
 {
-	it("Gross income of $5,004", () =>
+	it("should return 4082 for gross income of $5,004", () =>
 	{
 		chai.expect(lib.calculateNetIncome(5004, 922)).to.equal(4082);
 	});
@@ -73,13 +73,13 @@ describe("Net tax amount", () =>
 
 describe("Super amount", () =>
 {
-	it("Gross income of $60,050 and super rate of 9%", () =>
+	it("should return 450 for gross income of $60,050 and super rate of 9%", () =>
 	{
 		chai.expect(lib.calculateSuperContribution(60050, 0.09)).to.equal(450);
 	});
 });
 
-describe("Payslip", () =>
+describe("Payslip - ", () =>
 {
 	it("Test getting new payslip", () => {
 		

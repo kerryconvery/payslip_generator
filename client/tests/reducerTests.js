@@ -1,7 +1,7 @@
 import {expect} from 'chai'
 import {payslipReducer} from '../reducers/payslipReducer';
 
-describe("Reducer Tests.", () => {
+describe("Payslip reducer", () => {
 	
 	it("Check default state", () => {
 		
@@ -13,7 +13,7 @@ describe("Reducer Tests.", () => {
 		expect(state.error).equals(null);
 	}),
 	
-	it("Check fetching state", () => {
+	it("should return fetching state", () => {
 		
 		const state = payslipReducer({items:[], fetching:false, fetched:false,error:null}, {type:"GENERATE_PAYSLIPS_PENDING"});
 	
@@ -23,7 +23,7 @@ describe("Reducer Tests.", () => {
 		expect(state.error).equals(null);
 	}),
 	
-	it("Check fetched state", () => {
+	it("should return fetched state", () => {
 		const state = payslipReducer({
 				items: [], 
 				fetching: true, 
@@ -38,7 +38,7 @@ describe("Reducer Tests.", () => {
 		expect(state.error).equals(null);
 	}),
 	
-	it("Check error state were error is a string", () => {
+	it("should return error state as an array when error is a string", () => {
 		
 		const state = payslipReducer({
 				items: [], 
@@ -54,7 +54,7 @@ describe("Reducer Tests.", () => {
 		expect(Array.isArray(state.error)).equals(true);
 	}),
 	
-	it("Check error state were error is an array", () => {
+	it("should return error state when error is an array", () => {
 		
 		const state = payslipReducer({
 				items: [], 

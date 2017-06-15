@@ -3,7 +3,7 @@ const lib = require('./lib');
 
 module.exports = function(app) {
 
-	app.post("/payslips", [middleware.parseEmployeeListJsonContent, middleware.parseEmployeeCsvContent], function(req, res) {
+	app.post("/api/v1.0/payslips", [middleware.parseEmployeeListJsonContent, middleware.parseEmployeeCsvContent], function(req, res) {
 		
 		if(Array.isArray(req.body))
 		{		

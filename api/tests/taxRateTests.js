@@ -1,7 +1,7 @@
 const chai = require("chai");
 const taxRates = require("../taxRates");
 
-describe("Tax rate tests", () => {
+describe("Tax rate tests -", () => {
 	
 	it("Lower bound - Get the first tax rate", () => {
 		const taxBracket = taxRates.getTaxBracket(0);

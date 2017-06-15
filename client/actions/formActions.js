@@ -6,7 +6,7 @@ export function generatePayslips(csvData) {
 	return {
 		type: 'GENERATE_PAYSLIPS',
 		payload: axios.post(
-			serverUrl + "/payslips",
+			serverUrl + "/api/v1.0/payslips",
 			csvData,
 			{headers : {'Content-Type' : 'application/csv'}})
 	}

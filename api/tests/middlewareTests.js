@@ -7,7 +7,7 @@ const sinon = require("sinon");
 	
 describe('Test csv middleware', () => {
 
-	it('When the request content type is application/csv', (done) => {
+	it('when the request content type is application/csv', (done) => {
 		
 		const req = new mocks.Request();
 		
@@ -22,7 +22,7 @@ describe('Test csv middleware', () => {
 		});
 	});
 	
-	it('When the request content type is application/csv check body is object', (done) => {
+	it('when the request content type is application/csv check body is object', (done) => {
 		
 		var req = new mocks.Request();
 		
@@ -38,7 +38,7 @@ describe('Test csv middleware', () => {
 				
 	});
 	
-	it('When the request content type is application/csv and body contains errors', (done) => {
+	it('when the request content type is application/csv and body contains errors', (done) => {
 		
 		var req = new mocks.Request();
 		
@@ -60,7 +60,7 @@ describe('Test csv middleware', () => {
 		middleware.parseEmployeeCsvContent(req, res, next);
 	});
 	
-	it('When the request content type is application/csv and body is blank', () => {
+	it('when the request content type is application/csv and body is blank', () => {
 		
 		var req = new mocks.Request();
 		
@@ -82,7 +82,7 @@ describe('Test csv middleware', () => {
 		chai.expect(next.notCalled).equals(true);
 	});
 	
-	it('When the request content type is not application/csv', (done) => {
+	it('when the request content type is not application/csv', (done) => {
 		
 		var req = new mocks.Request();
 		
