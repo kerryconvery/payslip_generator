@@ -33,5 +33,9 @@ Change to Client directory and run npm install (if you haven't already run with 
 
 Browse to localhost:<whatever port the webserver is running on> and you should get the payslip csv input dialog.
 
+Use:
+Paste you comma separated data into the edit field labeled "CSV Input", one line for each row, and click on the submit button. 
+You should either get a list of payslips for an error detailing what went wrong.
+
 
 
